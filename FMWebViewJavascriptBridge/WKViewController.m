@@ -1,32 +1,34 @@
 //
-//  ViewController.m
+//  WKViewController.m
 //  ELMWebViewJavascripBridge
 //
-//  Created by sq on 15/9/1.
-//  Copyright (c) 2015年 sq. All rights reserved.
+//  Created by sq on 16/1/21.
+//  Copyright © 2016年 sq. All rights reserved.
 //
 
 #import "FMJavascriptBridge.h"
-#import "FMWebViewManager.h"
+#import "FMWKWebViewManager.h"
 #import "JavascripInterface.h"
-#import "ViewController.h"
+#import "WKViewController.h"
 
-@interface ViewController ()<UIWebViewDelegate>
-@property(nonatomic, strong) FMWebViewManager *manager;
+@interface WKViewController ()<WKNavigationDelegate>
+@property(nonatomic, strong) FMWKWebViewManager *manager;
 @end
 
-@implementation ViewController
+@implementation WKViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+  self.webView = [[WKWebView alloc] initWithFrame:self.view.bounds];
   [self.view addSubview:self.webView];
   [FMJavascriptBridge enableLogging];
-  _manager = [FMWebViewManager
+
+  _manager = [FMWKWebViewManager
       webViewManagerWithWebView:self.webView
                 webViewDelegate:self
                          bridge:[[FMJavascriptBridge alloc]
-                                    initWithResourceBundle:nil]];
+                                    initWithResourceBundle:[NSBundle
+                                                               mainBundle]]];
 
   [_manager addJavascriptInterface:[[JavascripInterface alloc]
                                        initWithController:self]
@@ -36,8 +38,11 @@
                 completionHandler:^(id result, NSError *error) {
                   NSLog(@"js  ==== %@", result);
                 }];
-
   [self loadExamplePage:self.webView];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,15 +50,7 @@
   // Dispose of any resources that can be recreated.
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView {
-  NSLog(@"webViewDidStartLoad");
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-  NSLog(@"webViewDidFinishLoad");
-}
-
-- (void)loadExamplePage:(UIWebView *)webView {
+- (void)loadExamplePage:(WKWebView *)webView {
   NSString *htmlPath =
       [[NSBundle mainBundle] pathForResource:@"Test" ofType:@"html"];
   NSString *appHtml = [NSString stringWithContentsOfFile:htmlPath
@@ -62,4 +59,5 @@
   NSURL *baseURL = [NSURL fileURLWithPath:htmlPath];
   [webView loadHTMLString:appHtml baseURL:baseURL];
 }
+
 @end

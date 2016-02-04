@@ -1,0 +1,153 @@
+<html>
+  <head>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <script>
+      function testJS() {
+        var clientInfo = document.getElementById('clientinfo')
+        clientInfo.innerHTML = 'show by native'
+        return 'response'
+      }
+    function connectWebViewJavascriptBridge(callback) {
+      if (window.WebViewJavascriptBridge) {
+        callback(WebViewJavascriptBridge)
+      } else {
+        document.addEventListener('WebViewJavascriptBridgeInjectFinishedReady', function() {
+                                  callback(WebViewJavascriptBridge)
+                                  }, false)
+      }
+    }
+    
+    connectWebViewJavascriptBridge(function(bridge) {
+                            
+  
+                                   
+                                   
+                                  var push = document.getElementById('push')
+                                   push.onclick = function() {
+                                   JavascripInterface.push()
+                                   return false
+                                   }
+                                   
+                                   var pop = document.getElementById('pop')
+                                   pop.onclick = function() {
+                                   JavascripInterface.pop("one")
+                                   return false
+                                   }
+                                   
+                                   var setNavTitle = document.getElementById('setNavTitle')
+                                   setNavTitle.onclick = function() {
+                                   JavascripInterface.setNavTitle({"name" : "carl", age:"18"},function(responseData) {
+                                                                  alert(responseData.name + responseData.age);
+                                                                  })
+                                   return false
+                                   }
+                                   
+                                   var present = document.getElementById('present')
+                                   present.onclick = function() {
+                                   JavascripInterface.present()
+                                   return false
+                                   }
+                                   
+                                   var dismiss = document.getElementById('dismiss')
+                                   dismiss.onclick = function() {
+                                   JavascripInterface.dismiss()
+                                   return false
+                                   }
+                                   
+                                   var setBack = document.getElementById('setBack')
+                                   setBack.onclick = function() {
+                                   JavascripInterface.setBack()
+                                   }
+                                   
+                                   var testInterfaceReturnData = document.getElementById('testInterfaceReturnData')
+                                   testInterfaceReturnData.onclick = function() {
+                                   JavascripInterface.testInterfaceReturnData({'testInterfaceReturnData': 'this is testInterfaceReturnData'}, function(responseData) {
+                                                                              testInterfaceReturnData.innerHTML = 'this is the message from oc: '+responseData
+                                                                              })
+                                   return false
+                                   }
+                                   
+                                   var testBOOL = document.getElementById('testBOOL')
+                                   
+                                   testBOOL.onclick = function() {
+                                   JavascripInterface.testBOOL(true,function(responseData) {
+                                                               alert(responseData);
+                                                               })
+                                   return false
+                                   }
+                                   var testInt = document.getElementById('testInt')
+                                   testInt.onclick = function() {
+                                   JavascripInterface.testInt(1,function(responseData) {
+                                                              alert(responseData);
+                                                              })
+                                   return false
+                                   }
+                                   var testString = document.getElementById('testString')
+                                   testString.onclick = function() {
+                                   JavascripInterface.testString('1',function(responseData) {
+                                                                 alert(responseData);
+                                                                 })
+                                   return false
+                                   }
+                                   var testArray = document.getElementById('testArray')
+                                   testArray.onclick = function() {
+                                   JavascripInterface.testArray(['1','2'],function(responseData) {
+                                                                alert(responseData[0]+' '+responseData[1]);
+                                                                })
+                                   return false
+                                   }
+                                   var testDictionary = document.getElementById('testDictionary')
+                                   testDictionary.onclick = function() {
+                                   JavascripInterface.testDictionary({'name':'carl'},function(responseData) {
+                                                                     alert('name  ' + responseData.name);
+                                                                     })
+                                   return false
+                                   }
+                                   var testCustomObject = document.getElementById('testCustomObject')
+                                   testCustomObject.onclick = function() {
+                                   JavascripInterface.testCustomObject({"name" : "carl", 'age':"18"},function(responseData) {
+                                                                       alert(responseData.name +'  '+responseData.age);
+                                                                       })
+                                   return false
+                                   }
+      })
+                                   
+      </script>
+  </head>
+  <body>
+    <center>
+      <h2>ELMWebViewJavascriptBridge Demo</h2>
+    </center>
+    <br />
+    <center>
+      <p>clientInfo</p>
+    </center>
+    <center>
+      <p id="clientinfo"></p>
+      <center>
+        <br />
+        <center>
+          <p>JsCallNativeExample</p>
+        </center>
+        <center>
+          <p><a href="#" id="push">push</a></p>
+          <p><a href="#" id="pop">pop</a></p>
+          <p><a href="#" id="present">present</a></p>
+          <p><a href="#" id="dismiss">dismiss</a></p>
+          <p><a href="#" id="setNavTitle">setNavTitle</a></p>
+          <p><a href="http://www.baidu.com" id="setBack">baidu</a></p>
+          <p><a href="#" id="testInterfaceReturnData">testInterfaceReturnData</a></p>
+          <p><a href="#" id="testBOOL">testBOOL</a></p>
+          <p><a href="#" id="testInt">testInt</a></p>
+          <p><a href="#" id="testString">testString</a></p>
+          <p><a href="#" id="testArray">testArray</a></p>
+          <p><a href="#" id="testDictionary">testDictionary</a></p>
+          <p><a href="#" id="testCustomObject">testCustomObject</a></p>
+          <center> 
+            <br /> 
+          </center> 
+        </center> 
+      </center> 
+    </center>  
+  </body>
+</html>

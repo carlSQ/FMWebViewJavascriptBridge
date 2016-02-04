@@ -1,0 +1,124 @@
+;
+(function (objs, objsMethods) {
+    if (window.WebViewJavascriptBridge) {
+        return
+    }
+    var messagingIframe
+    var sendMessageQueue = []
+
+    var CUSTOM_PROTOCOL_SCHEME = 'fmscheme'
+    var QUEUE_HAS_MESSAGE = '__FM_QUEUE_MESSAGE__'
+
+    var responseCallbacks = {}
+    var uniqueId = 1
+
+
+    function _createQueueReadyIframe(doc) {
+        messagingIframe = doc.createElement('iframe')
+        messagingIframe.style.display = 'none'
+        messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE
+        doc.documentElement.appendChild(messagingIframe)
+    }
+
+    function inject(objs, objsMethods) {
+        for (var index = 0; index < objs.length;index++) {
+            var obj = objs[index]
+            var methods = objsMethods[index]
+            injectEach(obj, methods)
+        }
+    }
+
+    function injectEach(obj, methods) {
+        window[obj] = {};
+        var jsObj = window[obj];
+        var l = methods.length;
+        for (var i = 0; i < l; i++) {
+        (function () {
+            var method = methods[i];
+            jsObj[method] = function () {
+                if (arguments.length > 2) {
+                    throw new Error('arguments Error');
+                }
+                if (arguments.length == 1) {
+                    if (typeof arguments[0] == "function") {
+                    return _callJavascriptInterface(obj, method, null, arguments[0]);
+                }
+                return _callJavascriptInterface(obj, method, arguments[0], null);
+
+                }
+                if (arguments.length == 0) {
+                    return _callJavascriptInterface(obj, method, null, null);
+                }
+                return _callJavascriptInterface(obj, method, arguments[0], arguments[1]);
+                };
+            })();
+        }
+    }
+
+    function _callJavascriptInterface(obj, method, data, responseCallback) {
+        if (data) {
+            _dosSendToJavascriptInterface({
+                'obj': obj,
+                'method': method,
+                'data': data
+            }, responseCallback)
+        } else {
+            _dosSendToJavascriptInterface({
+                'obj': obj,
+                'method': method
+            }, responseCallback)
+        }
+    }
+
+    function _dosSendToJavascriptInterface(message, responseCallback) {
+        if (responseCallback) {
+            var callbackId = 'cb_' + (uniqueId++) + '_' + new Date().getTime();
+            responseCallbacks[callbackId] = responseCallback;
+            message.callbackId = callbackId;
+        }
+        sendMessageQueue.push(message)
+        messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE
+    }
+
+    function _fetchQueue() {
+        var messageQueueString = JSON.stringify(sendMessageQueue)
+        sendMessageQueue = []
+        return messageQueueString
+    }
+
+    function _dispatchMessageFromObjC(messageJSON) {
+        setTimeout(function _timeoutDispatchMessageFromObjC() {
+            var message = JSON.parse(messageJSON)
+            var messageHandler
+            var responseCallback
+
+            if (message.responseId) {
+                responseCallback = responseCallbacks[message.responseId]
+                if (!responseCallback) {
+                    return;
+                }
+                responseCallback(message.responseData)
+                delete responseCallbacks[message.responseId]
+            }
+        })
+    }
+
+    function _handleMessageFromObjC(messageJSON) {
+        _dispatchMessageFromObjC(messageJSON)
+    }
+
+    window.WebViewJavascriptBridge = {
+        inject: inject,
+        _fetchQueue: _fetchQueue,
+        _handleMessageFromObjC: _handleMessageFromObjC
+    }
+
+    var doc = document
+    _createQueueReadyIframe(doc)
+    window.WebViewJavascriptBridge.inject(objs, objsMethods)
+    var doc = document;
+    var readyEvent = doc.createEvent('Events');
+    readyEvent.initEvent('WebViewJavascriptBridgeInjectFinishedReady');
+    readyEvent.bridge = WebViewJavascriptBridge
+    doc.dispatchEvent(readyEvent);
+})

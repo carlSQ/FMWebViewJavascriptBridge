@@ -2,15 +2,16 @@
 //  main.m
 //  FMWebViewJavascriptBridge
 //
-//  Created by 沈强 on 16/2/4.
-//  Copyright © 2016年 沈强. All rights reserved.
+//  Created by qiang.shen on 02/02/2016.
+//  Copyright (c) 2016 qiang.shen. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "AppDelegate.h"
+@import UIKit;
+#import "FMAppDelegate.h"
 
-int main(int argc, char * argv[]) {
-  @autoreleasepool {
-      return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
-  }
+int main(int argc, char * argv[])
+{
+    @autoreleasepool {
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([FMAppDelegate class]));
+    }
 }

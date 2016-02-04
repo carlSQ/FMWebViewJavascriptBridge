@@ -1,15 +1,15 @@
 //
 //  ViewController.h
-//  FMWebViewJavascriptBridge
+//  ELMWebViewJavascripBridge
 //
-//  Created by 沈强 on 16/2/4.
-//  Copyright © 2016年 沈强. All rights reserved.
+//  Created by sq on 15/9/1.
+//  Copyright (c) 2015年 sq. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController
 
+@property (nonatomic, strong) UIWebView *webView;
 
 @end
-
