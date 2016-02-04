@@ -11,12 +11,12 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/yuzhoulangzik/jsBridge"
   s.license          = 'MIT'
   s.author           = { "carl" => "yuzhoulangzik@126.com" }
-  s.source           = { :git => "https://github.com/yuzhoulangzik/jsBridge.git", :tag => "1.0.0" }
+  s.source           = { :git => "https://github.com/yuzhoulangzik/jsBridge.git", :tag => s.version.to_s }
 
   s.platform     = :ios, '7.0'
   s.requires_arc = true
-  s.source_files  = "Classes/*.{h,m}"
-  s.resource     = "Classes/FMWebViewJavascriptBridge.js.txt"
-  s.public_header_files ='Classes/**/*.h'
+  s.source_files  = 'Classes/*.{h,m}'
+  s.resource     = 'Classes/FMWebViewJavascriptBridge.js.txt'
+  s.public_header_files ='Classes/*.h'
   s.frameworks = 'UIKit', 'WebKit'
 end
