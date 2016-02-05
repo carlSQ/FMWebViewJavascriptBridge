@@ -3,7 +3,7 @@
 
 # About
 
-FMWebViewJavascriptBridge inspired by [WebViewJavascripBridge] (http://git.elenet.me/arch.iOS/ELMWebViewJavascriptBridge/blob/developer/WebViewJavascripBridge.md) and [react native](https://github.com/facebook/react-native)
+FMWebViewJavascriptBridge inspired by [WebViewJavascripBridge](http://git.elenet.me/arch.iOS/ELMWebViewJavascriptBridge/blob/developer/WebViewJavascripBridge.md) and [react native](https://github.com/facebook/react-native)
 
 you can call native method like android( object.method() ), native communicate with js by json(if native return custom object ,you must
 imp FMJSONModelDelegate ) ,for more information ,you can see demo;
@@ -60,7 +60,7 @@ withName:@"JavascripInterface"];
 
 ```
 
-### export native object to js, if you want export method of object to js, you must imp like this ELM_REMAP_METHOD(push, void, push : (NSUInteger)one)
+### export native object to js, if you want export method of object to js, you must imp like this FM_REMAP_METHOD(push, void, push : (NSUInteger)one)
 
 ``` objective-c
 @interface JavascripInterface : NSObject
@@ -79,21 +79,21 @@ withName:@"JavascripInterface"];
   return self;
 }
 
-ELM_REMAP_METHOD(push, void, push : (NSUInteger)one) {
+FM_REMAP_METHOD(push, void, push : (NSUInteger)one) {
   [self.viewController.navigationController pushViewController:[ViewController new] animated:YES];
   NSLog(@"test push%ld", one);
 }
 
-ELM_REMAP_METHOD(pop, void, pop : (NSString  *)testArray) {
+FM_REMAP_METHOD(pop, void, pop : (NSString  *)testArray) {
   [self.viewController.navigationController popViewControllerAnimated:YES];
   NSLog(@"pop array %@", testArray);
 }
 
-ELM_REMAP_METHOD(present, void, present) {
+FM_REMAP_METHOD(present, void, present) {
   [self.viewController presentViewController:[ViewController new] animated:YES completion:NULL];
 }
 
-ELM_REMAP_METHOD(dismiss, void, dismiss) { [self.viewController dismissViewControllerAnimated:YES completion:NULL]; }
+FM_REMAP_METHOD(dismiss, void, dismiss) { [self.viewController dismissViewControllerAnimated:YES completion:NULL]; }
 
 FM_REMAP_METHOD(testBOOL, BOOL, testBOOL : (BOOL)testBOOL) {
   if (testBOOL) {
@@ -243,7 +243,7 @@ connectWebViewJavascriptBridge(function(bridge) {
 </head>
 <body>
 <center>
-<h2>ELMWebViewJavascriptBridge Demo</h2>
+<h2>FMWebViewJavascriptBridge Demo</h2>
 </center>
 <br />
 <center>
