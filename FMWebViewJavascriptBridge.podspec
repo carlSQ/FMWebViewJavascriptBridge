@@ -2,10 +2,10 @@
 Pod::Spec.new do |s|
   s.name             = "FMWebViewJavascriptBridge"
   s.version          = "1.0.1"
-  s.summary          = "FMWebViewJavascriptBridge inspired by WebViewJavascripBridge and react native"
+  s.summary          = "ios js bridge"
 
   s.description      = <<-DESC
-                         ios js bridge
+                         FMWebViewJavascriptBridge inspired by WebViewJavascripBridge and react native
                        DESC
 
   s.homepage         = "https://github.com/carlSQ/FMWebViewJavascript"
