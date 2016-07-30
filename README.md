@@ -22,8 +22,8 @@ Native JavascripInterface can export method by FM_REMAP_METHOD or FM_EXPORT_METH
 ####Custom object
 
  must implement FMJSONModelDelegate protocol, here use [Mantle](https://github.com/Mantle/Mantle) 
-
-``` objective-c
+ 
+ ``` objective-c
 
 @interface User : MTLModel<MTLJSONSerializing, FMJSONModelDelegate>
 @property (nonatomic, strong) NSString *name;
