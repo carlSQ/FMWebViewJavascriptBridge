@@ -1,4 +1,7 @@
 
+[![CI Status](https://travis-ci.org/carlSQ/FMWebViewJavascriptBridge.svg?branch=master)](https://travis-ci.org/carlSQ/FMWebViewJavascriptBridge)
+[![Version](https://img.shields.io/cocoapods/v/FMWebViewJavascriptBridge.svg?style=flat)](http://cocoapods.org/pods/FKCoupling)
+
 # About
 
 FMWebViewJavascriptBridge inspired by [WebViewJavascripBridge](http://git.elenet.me/arch.iOS/ELMWebViewJavascriptBridge/blob/developer/WebViewJavascripBridge.md) and [react native](https://github.com/facebook/react-native)
