@@ -11,6 +11,7 @@
 #import "FMJavascriptBridge.h"
 #import "FMJavascriptInterface.h"
 #import "NSObject+FMJavascriptInterfaceCache.h"
+#import "FMJavascriptBridge+private.h"
 
 #define FMCustomProtocolScheme @"fmscheme"
 #define FMQueueHasMessage @"__FM_QUEUE_MESSAGE__"
@@ -88,6 +89,9 @@ static void FMParseObjCMethodName(NSString **objCMethodName,
   NSMutableDictionary *_javascriptInterfaceMethods;
 }
 @property(nonatomic, strong) NSMutableDictionary *javascriptInterfaces;
+@property(assign) id<FMWebViewJavascriptDelegate> delegate;
+
+@property(assign) NSUInteger numRequestsLoading;
 @end
 
 @implementation FMJavascriptBridge

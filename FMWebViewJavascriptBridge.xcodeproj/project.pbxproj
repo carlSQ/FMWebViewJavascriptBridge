@@ -20,7 +20,6 @@
 		1B76ECBB1C6366A600266ECE /* Test.html in Resources */ = {isa = PBXBuildFile; fileRef = 1B76ECAF1C6366A600266ECE /* Test.html */; };
 		1B76ECBC1C6366A600266ECE /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76ECB11C6366A600266ECE /* User.m */; };
 		1B76ECBD1C6366A600266ECE /* WKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76ECB31C6366A600266ECE /* WKViewController.m */; };
-		1B76ECCC1C6366C000266ECE /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 1B76ECBF1C6366C000266ECE /* .gitkeep */; };
 		1B76ECCD1C6366C000266ECE /* FMJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76ECC21C6366C000266ECE /* FMJavascriptBridge.m */; };
 		1B76ECCE1C6366C000266ECE /* FMWebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1B76ECC51C6366C000266ECE /* FMWebViewJavascriptBridge.js.txt */; };
 		1B76ECCF1C6366C000266ECE /* FMWebViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76ECC71C6366C000266ECE /* FMWebViewManager.m */; };
@@ -73,7 +72,6 @@
 		1B76ECB11C6366A600266ECE /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		1B76ECB21C6366A600266ECE /* WKViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKViewController.h; sourceTree = "<group>"; };
 		1B76ECB31C6366A600266ECE /* WKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKViewController.m; sourceTree = "<group>"; };
-		1B76ECBF1C6366C000266ECE /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		1B76ECC01C6366C000266ECE /* FMJavascriptBridge+private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FMJavascriptBridge+private.h"; sourceTree = "<group>"; };
 		1B76ECC11C6366C000266ECE /* FMJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMJavascriptBridge.h; sourceTree = "<group>"; };
 		1B76ECC21C6366C000266ECE /* FMJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMJavascriptBridge.m; sourceTree = "<group>"; };
@@ -202,7 +200,6 @@
 		1B76ECBE1C6366C000266ECE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				1B76ECBF1C6366C000266ECE /* .gitkeep */,
 				1B76ECC01C6366C000266ECE /* FMJavascriptBridge+private.h */,
 				1B76ECC11C6366C000266ECE /* FMJavascriptBridge.h */,
 				1B76ECC21C6366C000266ECE /* FMJavascriptBridge.m */,
@@ -345,7 +342,6 @@
 				1B76ECCE1C6366C000266ECE /* FMWebViewJavascriptBridge.js.txt in Resources */,
 				1B76ECBA1C6366A600266ECE /* Main.storyboard in Resources */,
 				1B76ECD31C63673A00266ECE /* Launch Screen.storyboard in Resources */,
-				1B76ECCC1C6366C000266ECE /* .gitkeep in Resources */,
 				1B76ECB71C6366A600266ECE /* Images.xcassets in Resources */,
 				1B76ECBB1C6366A600266ECE /* Test.html in Resources */,
 				1B76ECB41C6366A600266ECE /* InfoPlist.strings in Resources */,

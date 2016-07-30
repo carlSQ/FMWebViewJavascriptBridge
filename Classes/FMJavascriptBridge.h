@@ -8,18 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol FMWebViewJavascriptDelegate<NSObject>
-@required
-- (void)evaluateJavaScript:(NSString *)javaScriptString
-         completionHandler:
-             (void (^)(id result, NSError *error))completionHandler;
-@end
-
 @interface FMJavascriptBridge : NSObject
-
-@property(assign) id<FMWebViewJavascriptDelegate> delegate;
-
-@property(assign) NSUInteger numRequestsLoading;
 
 /**
  * enable log

@@ -77,6 +77,7 @@ FM_REMAP_METHOD(testBOOL, BOOL, testBOOL : (BOOL)testBOOL) {
     NSLog(@"TEST IS NO");
   }
   return YES;
+  
 }
 
 FM_REMAP_METHOD(testInt, int, testInt : (int)testInt) {
