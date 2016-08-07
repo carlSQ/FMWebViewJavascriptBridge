@@ -139,7 +139,7 @@ static void FMParseObjCMethodName(NSString **objCMethodName,
   NSMutableDictionary *message = [@{FMObj: object, FMMethod:methodName, FMJSFunctionArgsData:args} mutableCopy];
   
   if (response) {
-    NSString *callbackId = [NSString stringWithFormat:@"objc_cb_%ld", ++_uniqueId];
+    NSString *callbackId = [NSString stringWithFormat:@"objc_cb_%@", @(++_uniqueId)];
     [_jsBridgeResponses setObject:response forKey:callbackId];
     [message setObject:callbackId forKey:FMCallBackId];
   }
