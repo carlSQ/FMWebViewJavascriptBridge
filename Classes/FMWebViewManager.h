@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIWebView.h>
 #import "FMJavascriptBridge.h"
+#import "FMJavascriptInterface.h"
 
 @interface FMWebViewManager : NSObject
 
@@ -25,4 +26,13 @@
                 (void (^)(id result, NSError *error))completionHandler;
 
 - (void)addJavascriptInterface:(NSObject *)interface withName:(NSString *)name;
+  
+- (void)callFunctionOnObject:(NSString *)object
+                      method:(NSString *)methodName
+                        args:(NSArray *)args;
+  
+- (void)callFunctionOnObject:(NSString *)object
+                      method:(NSString *)methodName
+                        args:(NSArray *)args
+                    response:(FMJSFunctonResponse) response;
 @end

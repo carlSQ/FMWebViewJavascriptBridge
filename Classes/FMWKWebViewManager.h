@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <WebKit/WebKit.h>
 #import "FMJavascriptBridge.h"
+#import "FMJavascriptInterface.h"
 @interface FMWKWebViewManager : NSObject
 
 + (instancetype)webViewManagerWithWebView:(WKWebView *)webView
@@ -35,4 +36,13 @@
  *  @param name      name that js use
  */
 - (void)addJavascriptInterface:(NSObject *)interface withName:(NSString *)name;
+  
+- (void)callFunctionOnObject:(NSString *)object
+                      method:(NSString *)methodName
+                        args:(NSArray *)args;
+  
+- (void)callFunctionOnObject:(NSString *)object
+                      method:(NSString *)methodName
+                        args:(NSArray *)args
+                    response:(FMJSFunctonResponse) response;
 @end

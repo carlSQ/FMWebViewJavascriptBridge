@@ -19,6 +19,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"refresh" style:UIBarButtonItemStylePlain target:self action:@selector(loadExamplePage)];
   self.webView = [[WKWebView alloc] initWithFrame:self.view.bounds];
   [self.view addSubview:self.webView];
   [FMJavascriptBridge enableLogging];
@@ -38,7 +39,10 @@
                 completionHandler:^(id result, NSError *error) {
                   NSLog(@"js  ==== %@", result);
                 }];
-  [self loadExamplePage:self.webView];
+  [_manager callFunctionOnObject:@"testObj" method:@"testMethod" args:@[@"carlShen", @{@"name":@"carlShen"}] response:^(id responseData) {
+    NSLog(@"call js return %@",responseData);
+  }];
+  [self loadExamplePage];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -50,14 +54,14 @@
   // Dispose of any resources that can be recreated.
 }
 
-- (void)loadExamplePage:(WKWebView *)webView {
+- (void)loadExamplePage{
   NSString *htmlPath =
       [[NSBundle mainBundle] pathForResource:@"Test" ofType:@"html"];
   NSString *appHtml = [NSString stringWithContentsOfFile:htmlPath
                                                 encoding:NSUTF8StringEncoding
                                                    error:nil];
   NSURL *baseURL = [NSURL fileURLWithPath:htmlPath];
-  [webView loadHTMLString:appHtml baseURL:baseURL];
+  [self.webView loadHTMLString:appHtml baseURL:baseURL];
 }
 
 @end

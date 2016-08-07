@@ -6,6 +6,7 @@
 //
 //
 #import <Foundation/Foundation.h>
+#import "FMJavascriptInterface.h"
 
 @protocol FMWebViewJavascriptDelegate<NSObject>
 @required
@@ -44,6 +45,11 @@
 - (void)fm_evaluateJavaScript:(NSString *)javaScriptString
             completionHandler:
                 (void (^)(id result, NSError *error))completionHandler;
+
+- (void)callFunctionOnObject:(NSString *)object
+                      method:(NSString *)methodName
+                        args:(NSArray *)args
+                    response:(FMJSFunctonResponse) response;
 
 - (void)reset;
 

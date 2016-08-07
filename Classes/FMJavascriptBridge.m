@@ -16,11 +16,9 @@
 #define FMCustomProtocolScheme @"fmscheme"
 #define FMQueueHasMessage @"__FM_QUEUE_MESSAGE__"
 
-#define FMData @"data"
+#define FMNativeFunctionArgsData @"nativeFunctionArgsData"
 #define FMCallBackId @"callbackId"
-#define FMHandlerName @"handlerName"
-#define FMResponseId @"responseId"
-#define FMResponseData @"responseData"
+#define FMJSFunctionArgsData @"jsFunctionArgsData"
 #define FMMethod @"method"
 #define FMObj @"obj"
 
@@ -32,54 +30,54 @@ static void FMParseObjCMethodName(NSString **objCMethodName,
     NSString *unusedPattern = @"(?:__unused|__attribute__\\(\\(unused\\)\\))";
     NSString *constPattern = @"(?:const)";
     NSString *nullablePattern =
-        @"(?:__nullable|nullable|__attribute__\\(\\(nullable\\)\\))";
+    @"(?:__nullable|nullable|__attribute__\\(\\(nullable\\)\\))";
     NSString *nonnullPattern =
-        @"(?:__nonnull|nonnull|__attribute__\\(\\(nonnull\\)\\))";
+    @"(?:__nonnull|nonnull|__attribute__\\(\\(nonnull\\)\\))";
     NSString *annotationPattern = [NSString
-        stringWithFormat:@"(?:(?:(%@)|%@|(%@)|(%@))\\s*)", unusedPattern,
-                         constPattern, nullablePattern, nonnullPattern];
+                                   stringWithFormat:@"(?:(?:(%@)|%@|(%@)|(%@))\\s*)", unusedPattern,
+                                   constPattern, nullablePattern, nonnullPattern];
     NSString *pattern = [NSString
-        stringWithFormat:
-            @"(?<=:)(\\s*\\(%1$@?(\\w+?)(?:\\s*(\\*)*)?%1$@?\\))?\\s*\\w+",
-            annotationPattern];
+                         stringWithFormat:
+                         @"(?<=:)(\\s*\\(%1$@?(\\w+?)(?:\\s*(\\*)*)?%1$@?\\))?\\s*\\w+",
+                         annotationPattern];
     typeNameRegex = [[NSRegularExpression alloc] initWithPattern:pattern
                                                          options:0
                                                            error:NULL];
   });
-
+  
   NSString *methodName = *objCMethodName;
   NSRange methodRange = {0, methodName.length};
   NSMutableArray *args = [NSMutableArray array];
   [typeNameRegex
-      enumerateMatchesInString:methodName
-                       options:0
-                         range:methodRange
-                    usingBlock:^(NSTextCheckingResult *result,
-                                 __unused NSMatchingFlags flags,
-                                 __unused BOOL *stop) {
-                      NSRange typeRange = [result rangeAtIndex:5];
-                      NSString *type =
-                          typeRange.length
-                              ? [methodName substringWithRange:typeRange]
-                              : @"id";
-                      [args addObject:type];
-                    }];
+   enumerateMatchesInString:methodName
+   options:0
+   range:methodRange
+   usingBlock:^(NSTextCheckingResult *result,
+                __unused NSMatchingFlags flags,
+                __unused BOOL *stop) {
+     NSRange typeRange = [result rangeAtIndex:5];
+     NSString *type =
+     typeRange.length
+     ? [methodName substringWithRange:typeRange]
+     : @"id";
+     [args addObject:type];
+   }];
   *arguments = [args copy];
-
+  
   methodName = [typeNameRegex stringByReplacingMatchesInString:methodName
                                                        options:0
                                                          range:methodRange
                                                   withTemplate:@""];
-
+  
   methodName =
-      [methodName stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+  [methodName stringByReplacingOccurrencesOfString:@"\n" withString:@""];
   methodName =
-      [methodName stringByReplacingOccurrencesOfString:@" " withString:@""];
-
+  [methodName stringByReplacingOccurrencesOfString:@" " withString:@""];
+  
   if ([methodName hasSuffix:@";"]) {
     methodName = [methodName substringToIndex:methodName.length - 1];
   }
-
+  
   *objCMethodName = methodName;
 }
 
@@ -87,37 +85,43 @@ static void FMParseObjCMethodName(NSString **objCMethodName,
   NSMutableDictionary *_startupMessageQueue;
   NSBundle *_resourceBundle;
   NSMutableDictionary *_javascriptInterfaceMethods;
+  NSMutableDictionary *_jsBridgeResponses;
+  NSMutableArray *_callJSFunctionMessage;
+  NSUInteger _uniqueId;
 }
 @property(nonatomic, strong) NSMutableDictionary *javascriptInterfaces;
 @property(assign) id<FMWebViewJavascriptDelegate> delegate;
-
 @property(assign) NSUInteger numRequestsLoading;
+  
 @end
 
 @implementation FMJavascriptBridge
-
-static BOOL logging = NO;
-static NSUInteger logMaxLength = 500;
-
+  
+  static BOOL logging = NO;
+  static NSUInteger logMaxLength = 500;
+  
 + (void)enableLogging {
   logging = YES;
 }
-
+  
 + (void)setLogMaxLength:(NSUInteger)length {
   logMaxLength = length;
 }
-
+  
 - (instancetype)initWithResourceBundle:(NSBundle *)bundle {
   if (self = [super init]) {
     _resourceBundle = bundle;
     _startupMessageQueue = [NSMutableDictionary dictionary];
+    _jsBridgeResponses = [NSMutableDictionary dictionary];
+    _callJSFunctionMessage = [NSMutableArray array];
+    _uniqueId = 0;
   }
   return self;
 }
-
+  
 - (void)fm_evaluateJavaScript:(NSString *)javaScriptString
             completionHandler:
-                (void (^)(id result, NSError *error))completionHandler {
+(void (^)(id result, NSError *error))completionHandler {
   if (_startupMessageQueue) {
     [_startupMessageQueue setValue:[completionHandler copy]
                             forKey:javaScriptString];
@@ -126,24 +130,42 @@ static NSUInteger logMaxLength = 500;
                 completionHandler:completionHandler];
   }
 }
-
+  
+  
+- (void)callFunctionOnObject:(NSString *)object
+                      method:(NSString *)methodName
+                        args:(NSArray *)args
+                    response:(FMJSFunctonResponse) response {
+  NSMutableDictionary *message = [@{FMObj: object, FMMethod:methodName, FMJSFunctionArgsData:args} mutableCopy];
+  
+  if (response) {
+    NSString *callbackId = [NSString stringWithFormat:@"objc_cb_%ld", ++_uniqueId];
+    [_jsBridgeResponses setObject:response forKey:callbackId];
+    [message setObject:callbackId forKey:FMCallBackId];
+  }
+  if (_callJSFunctionMessage) {
+    [_callJSFunctionMessage addObject:message];
+  } else {
+    [self queueMessage:message];
+  }
+  
+}
+  
+  
 - (void)reset {
   _startupMessageQueue = _startupMessageQueue
-                             ? _startupMessageQueue
-                             : [NSMutableDictionary dictionary];
+  ? _startupMessageQueue
+  : [NSMutableDictionary dictionary];
+  _callJSFunctionMessage = _callJSFunctionMessage ? _callJSFunctionMessage : [NSMutableArray array];
 }
-
+  
 - (void)addJavascriptInterface:(NSObject *)interface withName:(NSString *)name {
   if (!self.javascriptInterfaces) {
     self.javascriptInterfaces = [[NSMutableDictionary alloc] init];
   }
   [self.javascriptInterfaces setValue:interface forKey:name];
 }
-
-- (void)dealloc {
-  _startupMessageQueue = nil;
-}
-
+  
 - (void)flushMessageQueue:(NSString *)messageQueueString {
   id messages = [self deserializeMessageJSON:messageQueueString];
   if (![messages isKindOfClass:[NSArray class]]) {
@@ -162,18 +184,22 @@ static NSUInteger logMaxLength = 500;
       continue;
     }
     [self log:@"FM" json:message];
-
+    
     if (message[FMObj]) {
       [self callJavascriptInterface:message];
       continue;
+    } else if (message[FMCallBackId]) {
+      FMJSFunctonResponse jsResponse =  [_jsBridgeResponses objectForKey:message[FMCallBackId]];
+      [_jsBridgeResponses removeObjectForKey:message[FMCallBackId]];
+      jsResponse(message[FMNativeFunctionArgsData]);
     }
   }
 }
-
+  
 - (NSString *)injectJavascript {
   NSBundle *bundle = _resourceBundle ? _resourceBundle : [NSBundle mainBundle];
   NSString *filePath =
-      [bundle pathForResource:@"FMWebViewJavascriptBridge.js" ofType:@"txt"];
+  [bundle pathForResource:@"FMWebViewJavascriptBridge.js" ofType:@"txt"];
   NSString *content = [NSString stringWithContentsOfFile:filePath
                                                 encoding:NSUTF8StringEncoding
                                                    error:nil];
@@ -183,10 +209,10 @@ static NSUInteger logMaxLength = 500;
   NSString *jsObjs = [self serializeMessage:objs pretty:NO];
   NSString *jsMethods = [self serializeMessage:methods pretty:NO];
   NSString *js =
-      [NSString stringWithFormat:@"%@(%@,%@);", content, jsObjs, jsMethods];
+  [NSString stringWithFormat:@"%@(%@,%@);", content, jsObjs, jsMethods];
   return js;
 }
-
+  
 - (BOOL)isCorrectProcotocolScheme:(NSURL *)url {
   if ([[url scheme] isEqualToString:FMCustomProtocolScheme]) {
     return YES;
@@ -194,7 +220,7 @@ static NSUInteger logMaxLength = 500;
     return NO;
   }
 }
-
+  
 - (BOOL)isCorrectHost:(NSURL *)url {
   if ([[url host] isEqualToString:FMQueueHasMessage]) {
     return YES;
@@ -202,7 +228,7 @@ static NSUInteger logMaxLength = 500;
     return NO;
   }
 }
-
+  
 - (void)logUnkownMessage:(NSURL *)url {
 #if DEBUG
   NSLog(@"WebViewJavascriptBridge: WARNING: Received unknown "
@@ -210,7 +236,7 @@ static NSUInteger logMaxLength = 500;
         FMCustomProtocolScheme, [url path]);
 #endif
 }
-
+  
 - (void)dispatchStartUpMessageQueue {
   if (_startupMessageQueue) {
     for (NSString *queuedMessage in _startupMessageQueue.allKeys) {
@@ -219,18 +245,24 @@ static NSUInteger logMaxLength = 500;
     }
     _startupMessageQueue = nil;
   }
+  if (_callJSFunctionMessage) {
+    for (NSDictionary *message in _callJSFunctionMessage) {
+      [self queueMessage:message];
+    }
+    _callJSFunctionMessage = nil;
+  }
 }
-
+  
 - (NSString *)webViewJavascriptCheckCommand {
   return @"typeof WebViewJavascriptBridge == \'object\';";
 }
-
+  
 - (NSString *)webViewJavascriptFetchQueyCommand {
-  return @"WebViewJavascriptBridge._fetchQueue();";
+  return @"WebViewJavascriptBridge.fetchQueue();";
 }
-
+  
 #pragma mark - private
-
+  
 - (void)injectJavascriptInterfaces:(NSMutableArray *)objs
                            methods:(NSMutableArray *)objsMethods {
   for (id key in self.javascriptInterfaces) {
@@ -240,14 +272,14 @@ static NSUInteger logMaxLength = 500;
     [objsMethods addObject:methods];
   }
 }
-
+  
 - (NSArray *)methods:(NSObject *)javascriptObject key:(NSString *)key {
   if (!javascriptObject.ocMethodsMapJsInterfaces) {
     NSMutableDictionary *methodsMap = [NSMutableDictionary dictionary];
     Class moduleClass = javascriptObject.class;
     unsigned int methodCount;
     Method *methods =
-        class_copyMethodList(object_getClass(moduleClass), &methodCount);
+    class_copyMethodList(object_getClass(moduleClass), &methodCount);
     for (unsigned int i = 0; i < methodCount; i++) {
       Method method = methods[i];
       SEL selector = method_getName(method);
@@ -256,7 +288,7 @@ static NSUInteger logMaxLength = 500;
         NSArray *entries = ((NSArray * (*)(id, SEL))imp)(moduleClass, selector);
         NSString *objcMethodName = entries[1];
         NSString *jsMethodName =
-            ((NSString *)entries[0]).length > 0 ? entries[0] : objcMethodName;
+        ((NSString *)entries[0]).length > 0 ? entries[0] : objcMethodName;
         [methodsMap setValue:objcMethodName forKey:jsMethodName];
       }
     }
@@ -268,12 +300,12 @@ static NSUInteger logMaxLength = 500;
       _javascriptInterfaceMethods = [NSMutableDictionary dictionary];
     }
     [_javascriptInterfaceMethods
-        setValue:javascriptObject.ocMethodsMapJsInterfaces
-          forKey:key];
+     setValue:javascriptObject.ocMethodsMapJsInterfaces
+     forKey:key];
   }
   return javascriptObject.ocMethodsMapJsInterfaces.allKeys;
 }
-
+  
 - (void)callJavascriptInterface:(NSDictionary *)message {
   id interface;
   if (message[FMObj]) {
@@ -282,8 +314,8 @@ static NSUInteger logMaxLength = 500;
   if (!interface) {
     [self raiseException:@"FMNoHandlerException"
                  message:[NSString stringWithFormat:
-                                       @"No handler for message from JS: %@",
-                                       message]];
+                          @"No handler for message from JS: %@",
+                          message]];
     return;
   }
   NSString *jsMethod = message[FMMethod];
@@ -291,37 +323,37 @@ static NSUInteger logMaxLength = 500;
   if (!objcMethod) {
     [self raiseException:@"FMNoHandlerException"
                  message:[NSString stringWithFormat:
-                                       @"No handler for message from JS: %@",
-                                       message]];
+                          @"No handler for message from JS: %@",
+                          message]];
     return;
   }
   NSArray *argMethodTypes = nil;
   FMParseObjCMethodName(&objcMethod, &argMethodTypes);
   SEL selector = NSSelectorFromString(objcMethod);
   NSMethodSignature *sig =
-      [[interface class] instanceMethodSignatureForSelector:selector];
+  [[interface class] instanceMethodSignatureForSelector:selector];
   NSInvocation *invoker = [NSInvocation invocationWithMethodSignature:sig];
   [invoker retainArguments];
   invoker.selector = selector;
   invoker.target = interface;
-  id arg = message[FMData];
+  id arg = message[FMNativeFunctionArgsData];
   if (sig.numberOfArguments > 4) {
     [self raiseException:@"FMNoHandlerException"
                  message:@"javascrip interface arguments error"];
     return;
   }
-
+  
 #define FM_CASE(_typeChar, _type, _typeSelector, i)                   \
-  case _typeChar: {                                                   \
-    if (arg && ![arg isKindOfClass:[NSNumber class]]) {               \
-      [self raiseException:@"args type" message:@"args type  error"]; \
-      return;                                                         \
-    }                                                                 \
-    _type argValue = [(NSNumber *)arg _typeSelector];                 \
-    [invoker setArgument:&argValue atIndex:i];                        \
-    break;                                                            \
-  }
-
+case _typeChar: {                                                   \
+if (arg && ![arg isKindOfClass:[NSNumber class]]) {               \
+[self raiseException:@"args type" message:@"args type  error"]; \
+return;                                                         \
+}                                                                 \
+_type argValue = [(NSNumber *)arg _typeSelector];                 \
+[invoker setArgument:&argValue atIndex:i];                        \
+break;                                                            \
+}
+  
   for (int i = 2; i < sig.numberOfArguments; i++) {
     const char *argType = [sig getArgumentTypeAtIndex:i];
     switch (argType[0]) {
@@ -340,9 +372,9 @@ static NSUInteger logMaxLength = 500;
       FM_CASE('B', BOOL, boolValue, i)
       case '@': {
 #define FM_ARG_CASE(_type)                                                     \
-  ([argMethodTypes[i - 2] isEqualToString:NSStringFromClass([_type class])] && \
-   (!arg || [arg isKindOfClass:[_type class]]))
-
+([argMethodTypes[i - 2] isEqualToString:NSStringFromClass([_type class])] && \
+(!arg || [arg isKindOfClass:[_type class]]))
+        
         if (FM_ARG_CASE(NSArray) || FM_ARG_CASE(NSDictionary) ||
             FM_ARG_CASE(NSString) || FM_ARG_CASE(NSNumber)) {
           [invoker setArgument:&arg atIndex:i];
@@ -356,11 +388,11 @@ static NSUInteger logMaxLength = 500;
             } else if ([responseData respondsToSelector:@selector(fm_jsonDicWithModel:)]) {
               responseData = [((id<FMJSONModelDelegate>)responseData) fm_jsonDicWithModel:responseData];
             }
-            NSDictionary *msg = @{ FMResponseId: message[FMCallBackId], FMResponseData: responseData};
+            NSDictionary *msg = @{FMCallBackId: message[FMCallBackId], FMJSFunctionArgsData: responseData};
             [self queueMessage:msg];
           } : ^(id responseData) {
           };
-
+          
           [invoker setArgument:&responseCallback atIndex:i];
           continue;
         }
@@ -371,35 +403,35 @@ static NSUInteger logMaxLength = 500;
         Class modelClass = NSClassFromString(argMethodTypes[i - 2]);
         id model = nil;
         if ([modelClass
-                respondsToSelector:@selector(fm_modelWithDictionary:)]) {
+             respondsToSelector:@selector(fm_modelWithDictionary:)]) {
           model = [(Class<FMJSONModelDelegate>)modelClass
-              fm_modelWithDictionary:arg];
+                   fm_modelWithDictionary:arg];
         }
         if (model) {
           [invoker setArgument:&model atIndex:i];
         } else {
           [self log:[NSString stringWithFormat:@"%@ init error",
-                                               argMethodTypes[i - 2]]
+                     argMethodTypes[i - 2]]
                json:arg];
         }
-
+        
       } break;
       default:
-        [self raiseException:@"args type" message:@"args type  error"];
-        return;
+      [self raiseException:@"args type" message:@"args type  error"];
+      return;
     }
   }
   [invoker invoke];
   if (message[FMCallBackId] && sig.methodReturnLength > 0) {
     id responseData = nil;
 #define FM_RETUNR_CASE(_typeChar, _type) \
-  case _typeChar: {                      \
-    _type response;                      \
-    [invoker getReturnValue:&response];  \
-    responseData = @(response);          \
-    break;                               \
-  }
-
+case _typeChar: {                      \
+_type response;                      \
+[invoker getReturnValue:&response];  \
+responseData = @(response);          \
+break;                               \
+}
+    
     const char *retType = [sig methodReturnType];
     switch (retType[0]) {
       FM_RETUNR_CASE('c', char)
@@ -424,9 +456,9 @@ static NSUInteger logMaxLength = 500;
             [responseData isKindOfClass:[NSString class]] ||
             [responseData isKindOfClass:[NSNumber class]]) {
         } else if ([responseData
-                       respondsToSelector:@selector(fm_jsonDicWithModel:)]) {
+                    respondsToSelector:@selector(fm_jsonDicWithModel:)]) {
           responseData = [(id<FMJSONModelDelegate>)responseData
-              fm_jsonDicWithModel:responseData];
+                          fm_jsonDicWithModel:responseData];
         } else {
           responseData = [NSNull null];
           ;
@@ -434,22 +466,22 @@ static NSUInteger logMaxLength = 500;
       }
     }
     NSDictionary *msg =
-        @{FMResponseId : message[FMCallBackId], FMResponseData : responseData};
+    @{FMCallBackId : message[FMCallBackId], FMJSFunctionArgsData : responseData};
     [self queueMessage:msg];
   }
 }
-
+  
 - (void)queueMessage:(NSDictionary *)message {
   [self dispatchMessage:message];
 }
-
+  
 - (void)dispatchMessage:(NSDictionary *)message {
   NSString *messageJSON = [self serializeMessage:message pretty:NO];
   [self log:@"SEND" json:messageJSON];
   messageJSON = [self filterJsonString:messageJSON];
   NSString *javascriptCommand = [NSString
-      stringWithFormat:@"WebViewJavascriptBridge._handleMessageFromObjC('%@');",
-                       messageJSON];
+                                 stringWithFormat:@"WebViewJavascriptBridge.handleMessageFromNative('%@');",
+                                 messageJSON];
   [self log:@"SEND" json:javascriptCommand];
   if ([[NSThread currentThread] isMainThread]) {
     [self evaluateJavascript:javascriptCommand];
@@ -459,11 +491,11 @@ static NSUInteger logMaxLength = 500;
     });
   }
 }
-
+  
 - (void)evaluateJavascript:(NSString *)javascriptCommand {
   [self.delegate evaluateJavaScript:javascriptCommand completionHandler:NULL];
 }
-
+  
 - (NSString *)filterJsonString:(NSString *)messageJSON {
   messageJSON = [messageJSON stringByReplacingOccurrencesOfString:@"\\"
                                                        withString:@"\\\\"];
@@ -483,7 +515,7 @@ static NSUInteger logMaxLength = 500;
                                                        withString:@"\\u2029"];
   return messageJSON;
 }
-
+  
 - (void)log:(NSString *)action json:(id)json {
 #if DEBUG
   if (!logging) {
@@ -499,32 +531,32 @@ static NSUInteger logMaxLength = 500;
   }
 #endif
 }
-
+  
 - (void)raiseException:(NSString *)name message:(NSString *)reason {
 #if DEBUG
   NSException *exception =
-      [[NSException alloc] initWithName:name reason:reason userInfo:nil];
+  [[NSException alloc] initWithName:name reason:reason userInfo:nil];
   [exception raise];
 #endif
 }
-
+  
 - (NSString *)serializeMessage:(id)message pretty:(BOOL)pretty {
   return [[NSString alloc]
-      initWithData:[NSJSONSerialization
-                       dataWithJSONObject:message
-                                  options:(NSJSONWritingOptions)(
-                                              pretty
-                                                  ? NSJSONWritingPrettyPrinted
-                                                  : 0)
-                                    error:nil]
+          initWithData:[NSJSONSerialization
+                        dataWithJSONObject:message
+                        options:(NSJSONWritingOptions)(
+                                                       pretty
+                                                       ? NSJSONWritingPrettyPrinted
+                                                       : 0)
+                        error:nil]
           encoding:NSUTF8StringEncoding];
 }
-
+  
 - (NSArray *)deserializeMessageJSON:(NSString *)messageJSON {
   return [NSJSONSerialization
-      JSONObjectWithData:[messageJSON dataUsingEncoding:NSUTF8StringEncoding]
-                 options:NSJSONReadingAllowFragments
-                   error:nil];
+          JSONObjectWithData:[messageJSON dataUsingEncoding:NSUTF8StringEncoding]
+          options:NSJSONReadingAllowFragments
+          error:nil];
 }
-
-@end
+  
+  @end

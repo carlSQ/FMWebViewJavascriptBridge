@@ -26,6 +26,8 @@
 		1B76ECD01C6366C000266ECE /* FMWKWebViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76ECC91C6366C000266ECE /* FMWKWebViewManager.m */; };
 		1B76ECD11C6366C000266ECE /* NSObject+FMJavascriptInterfaceCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76ECCB1C6366C000266ECE /* NSObject+FMJavascriptInterfaceCache.m */; };
 		1B76ECD31C63673A00266ECE /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B76ECD21C63673A00266ECE /* Launch Screen.storyboard */; };
+		1B8285851D575533003038A0 /* FMWebViewJavascriptBridge.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 1B8285831D575533003038A0 /* FMWebViewJavascriptBridge.podspec */; };
+		1B8285861D575533003038A0 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 1B8285841D575533003038A0 /* README.md */; };
 		F6E5E30ECB118D875BE290B5 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A2EA42E6C2BD4C4AD262823 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -85,6 +87,8 @@
 		1B76ECCA1C6366C000266ECE /* NSObject+FMJavascriptInterfaceCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+FMJavascriptInterfaceCache.h"; sourceTree = "<group>"; };
 		1B76ECCB1C6366C000266ECE /* NSObject+FMJavascriptInterfaceCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+FMJavascriptInterfaceCache.m"; sourceTree = "<group>"; };
 		1B76ECD21C63673A00266ECE /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		1B8285831D575533003038A0 /* FMWebViewJavascriptBridge.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FMWebViewJavascriptBridge.podspec; sourceTree = "<group>"; };
+		1B8285841D575533003038A0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		77C7C559B788BB6883B6F159 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		921DD7FB2BD4F993A8293FE1 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -118,6 +122,8 @@
 		1B76EC641C6364F400266ECE = {
 			isa = PBXGroup;
 			children = (
+				1B8285831D575533003038A0 /* FMWebViewJavascriptBridge.podspec */,
+				1B8285841D575533003038A0 /* README.md */,
 				1B76ECBE1C6366C000266ECE /* Classes */,
 				1B76EC6F1C6364F400266ECE /* FMWebViewJavascriptBridge */,
 				1B76EC891C6364F400266ECE /* FMWebViewJavascriptBridgeTests */,
@@ -346,6 +352,7 @@
 				1B76ECBB1C6366A600266ECE /* Test.html in Resources */,
 				1B76ECB41C6366A600266ECE /* InfoPlist.strings in Resources */,
 				1B76ECB61C6366A600266ECE /* FMWebViewJavascriptBridge-Info.plist in Resources */,
+				1B8285851D575533003038A0 /* FMWebViewJavascriptBridge.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,6 +434,7 @@
 				1B76ECCF1C6366C000266ECE /* FMWebViewManager.m in Sources */,
 				1B76EC781C6364F400266ECE /* ViewController.m in Sources */,
 				1B76EC721C6364F400266ECE /* main.m in Sources */,
+				1B8285861D575533003038A0 /* README.md in Sources */,
 				1B76ECB81C6366A600266ECE /* JavascripInterface.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

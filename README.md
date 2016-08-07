@@ -100,6 +100,10 @@ FM_REMAP_METHOD(synchronizeResponse, type , synchronizeResponse:(type)JSONObject
 
 ```
 
+#### Call JS function in native
+
+
+
 #### Init jsBridge and inject JavascripInterface object to js
 
 ``` objective-c
@@ -123,6 +127,22 @@ initWithResourceBundle:nil]];
 
 ### JS use native JavascripInterface object
 
+``` objective-c
+
+[_manager fm_evaluateJavaScript:@"testObj.testMethod()"
+              completionHandler:^(id result, NSError *error) {
+        NSLog(@"js  ==== %@", result);
+}];
+
+or
+
+// this call need js call  bridge.addNativeInterfaces() regsiter
+[_manager callFunctionOnObject:@"testObj" method:@"testMethod" args:@[@"", @{@"key":@"value"}] response:^(id responseData) {
+      NSLog(@"call js return %@",responseData);
+}];
+
+```
+
 
 ``` javascrip
 <script>
@@ -144,6 +164,11 @@ initWithResourceBundle:nil]];
   }
 
 connectWebViewJavascriptBridge(function(bridge) {
+
+   bridge.receiveNativeMessage();
+
+  // rejister object to native
+  bridge.addNativeInterfaces('testObj',testObject);
 
 	NativeObjectInJSInterface.testJSONObject(value);
 	

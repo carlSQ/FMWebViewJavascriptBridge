@@ -7,6 +7,18 @@
         clientInfo.innerHTML = 'show by native'
         return 'response'
       }
+    
+    function person() {
+      this.testMethod = testMethod;
+      function testMethod(name, user) {
+        alert(name+user.name);
+        return {name:"carl shen", age:"7"};
+        
+      }
+    }
+    
+    testObject= new person();
+    
     function connectWebViewJavascriptBridge(callback) {
       if (window.WebViewJavascriptBridge) {
         callback(WebViewJavascriptBridge)
@@ -19,9 +31,9 @@
     
     connectWebViewJavascriptBridge(function(bridge) {
                             
-  
+                                  bridge.receiveNativeMessage();
                                    
-                                   
+                                 bridge.addNativeInterfaces('testObj',testObject);
                                   var push = document.getElementById('push')
                                    push.onclick = function() {
                                    JavascripInterface.push()

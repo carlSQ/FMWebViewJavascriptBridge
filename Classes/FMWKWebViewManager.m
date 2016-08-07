@@ -46,6 +46,20 @@
 - (void)addJavascriptInterface:(NSObject *)interface withName:(NSString *)name {
   [_bridge addJavascriptInterface:interface withName:name];
 }
+  
+- (void)callFunctionOnObject:(NSString *)object
+                      method:(NSString *)methodName
+                        args:(NSArray *)args {
+  [self callFunctionOnObject:object method:methodName args:args response:nil];
+}
+  
+- (void)callFunctionOnObject:(NSString *)object
+                      method:(NSString *)methodName
+                        args:(NSArray *)args
+                    response:(FMJSFunctonResponse) response {
+  [_bridge callFunctionOnObject:object method:methodName args:args response:response];
+}
+
 
 - (void)setup:(WKWebView *)webView
     webViewDelgate:(id<WKNavigationDelegate>)webViewDelagate

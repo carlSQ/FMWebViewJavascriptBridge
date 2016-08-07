@@ -7,6 +7,8 @@
 //
 
 typedef void (^FMAsyResponse)(id responseData);
+typedef void (^FMJSFunctonResponse)(id responseData);
+
 
 #define FM_EXPORT_METHOD(returnType, method) \
   FM_REMAP_METHOD(, returnType, method)
