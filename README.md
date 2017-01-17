@@ -1,6 +1,5 @@
 #FMWebViewJavascriptBridge
 
-[![CI Status](https://travis-ci.org/carlSQ/FMWebViewJavascriptBridge.svg?branch=master)](https://travis-ci.org/carlSQ/FMWebViewJavascriptBridge)
 [![Version](https://img.shields.io/cocoapods/v/FMWebViewJavascriptBridge.svg?style=flat)](http://cocoapods.org/pods/FMWebViewJavascriptBridge)
 
 # About
