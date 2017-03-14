@@ -10,11 +10,8 @@
 #import "FMWKWebViewBridge+Private.h"
 #import "NSObject+FMAnnotation.h"
 
-#define FMNativeFunctionArgsData @"nativeFunctionArgsData"
 #define FMCallBackId @"callbackId"
 #define FMJSFunctionArgsData @"jsFunctionArgsData"
-#define FMMethod @"method"
-#define FMObj @"obj"
 
 @interface FMJSBridgeMessageHandler () {
   __weak FMWKWebViewBridge *_webViewBridge;
@@ -37,7 +34,7 @@
     
 #if DEBUG
     NSLog(@"FMJSBridgeMessageHandler: WARNING: Invalid message.body ,is not a dictionary,received: %@",
-           [message.body class]);
+          [message.body class]);
 #endif
     
     return;
@@ -74,7 +71,7 @@
     [self raiseException:@"method not fount" message:[NSString stringWithFormat:@"module %@ selectot %@ not found ",module,methodName]];
     return;
   }
-
+  
   NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:sig];
   invocation.selector = selector;
   invocation.target = interface;
@@ -87,17 +84,17 @@
   NSMutableArray<dispatch_block_t> *argumentBlocks = [[NSMutableArray alloc] initWithCapacity:sig.numberOfArguments - 2];
   
   
-#define FM_CASE(_typeChar, _type, _typeSelector, i)            \
-case _typeChar: {                                               \
-if (argument && ![argument isKindOfClass:[NSNumber class]]) {    \
-[self raiseException:@"args type" message:@"args type  error"];   \
-return;                                                            \
-}                                                                   \
-_type argumentValue = [(NSNumber *)argument _typeSelector];          \
-[argumentBlocks addObject:^() {                                       \
-[invocation setArgument:&argumentValue atIndex:i];                     \
-}];                                                                     \
-break;                                                                   \
+#define FM_CASE(_typeChar, _type, _typeSelector, i)                        \
+case _typeChar: {                                                           \
+if (argument && ![argument isKindOfClass:[NSNumber class]]) {                \
+[self raiseException:@"args type" message:@"args type  error"];               \
+return;                                                                        \
+}                                                                               \
+_type argumentValue = [(NSNumber *)argument _typeSelector];                      \
+[argumentBlocks addObject:^() {                                                   \
+[invocation setArgument:&argumentValue atIndex:i];                                 \
+}];                                                                                 \
+break;                                                                               \
 }
   
   for (int i=2; i<sig.numberOfArguments; i++) {
@@ -105,12 +102,14 @@ break;                                                                   \
     const char *argumentType = [sig getArgumentTypeAtIndex:i];
     static const char *blockType = @encode(typeof(^{}));
     id argument = arguments[i-2];
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wincompatible-pointer-types-discards-qualifiers"
     if (!strcmp(argumentType, blockType)) {
-    FMCallBack responseCallback = [^(id result) {
+      FMCallBack responseCallback = [^(id result) {
         if (result == nil) {
           result = [NSNull null];
         }
-        NSDictionary *msg = @{FMCallBackId: argument, FMJSFunctionArgsData: result};
+        NSDictionary *msg = @{FMCallBackId:argument, FMJSFunctionArgsData:result};
         [self queueMessage:msg];
       } copy];
       [argumentBlocks addObject:^ {
@@ -131,15 +130,15 @@ break;                                                                   \
           FM_CASE('f', float, floatValue, i)
           FM_CASE('d', double, doubleValue, i)
           FM_CASE('B', BOOL, boolValue, i)
-          
+     #pragma clang diagnostic pop
         default:
           [invocation setArgument:&argument atIndex:i];
           break;
       }
-
+      
     }
   }
-  
+
   for (dispatch_block_t argumentBlock in argumentBlocks) {
     argumentBlock();
   }
@@ -151,23 +150,23 @@ break;                                                                   \
 - (void)queueMessage:(NSDictionary *)message {
   
   NSString *messageJSON = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:message
-                                                                                          options:(NSJSONWritingOptions)(0)
-                                                                                            error:nil]
-                                                 encoding:NSUTF8StringEncoding];;
+                                                                                         options:(NSJSONWritingOptions)(0)
+                                                                                           error:nil]
+                                                encoding:NSUTF8StringEncoding];;
   messageJSON = [self filterJsonString:messageJSON];
   
   NSString *javascriptCommand = [NSString
                                  stringWithFormat:@"WebViewJavascriptBridge.handleMessageFromNative('%@');",
                                  messageJSON];
 #define FM_MAIN_EXCUTE(block)                          \
-  if ([[NSThread currentThread] isMainThread]) {        \
-       block();                                          \
-  } else {                                                \
-    dispatch_sync(dispatch_get_main_queue(), ^{            \
-         block();                                           \
-    });                                                      \
-  }                                                           \
-  
+if ([[NSThread currentThread] isMainThread]) {          \
+block();                                                 \
+} else {                                                  \
+dispatch_sync(dispatch_get_main_queue(), ^{                \
+block();                                                    \
+});                                                          \
+}                                                             \
+
   FM_MAIN_EXCUTE(^{
     [_webViewBridge.webview evaluateJavaScript:javascriptCommand completionHandler:nil];
   })

@@ -52,6 +52,7 @@ FM_EXPORT_METHOD(@selector(dismiss))
 FM_EXPORT_METHOD(@selector(setNavTitle:response:))
 - (void)setNavTitle:(NSDictionary *)userInfo response:(FMCallBack)callBack {
   self.viewController.title = userInfo[@"name"];
+  callBack(@{@"name":@"carlSQ",@"age":@"26"});
 }
 
 FM_EXPORT_METHOD(@selector(setBack))

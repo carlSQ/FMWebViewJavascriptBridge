@@ -25,6 +25,7 @@
 		1BC9C9021E7291D900C07F21 /* FMWKWebViewBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC9C9011E7291D900C07F21 /* FMWKWebViewBridge.m */; };
 		1BC9C9051E72966200C07F21 /* FMJSBridgeMessageHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC9C9041E72966200C07F21 /* FMJSBridgeMessageHandler.m */; };
 		1BC9C9091E72D85900C07F21 /* NSObject+FMAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC9C9081E72D85900C07F21 /* NSObject+FMAnnotation.m */; };
+		1BC9C9111E77C69300C07F21 /* TestJavaScripInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC9C9101E77C69300C07F21 /* TestJavaScripInterface.m */; };
 		F6E5E30ECB118D875BE290B5 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A2EA42E6C2BD4C4AD262823 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +79,8 @@
 		1BC9C9071E72D85900C07F21 /* NSObject+FMAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+FMAnnotation.h"; sourceTree = "<group>"; };
 		1BC9C9081E72D85900C07F21 /* NSObject+FMAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+FMAnnotation.m"; sourceTree = "<group>"; };
 		1BC9C90C1E768CC700C07F21 /* FMWKWebViewBridge+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FMWKWebViewBridge+Private.h"; sourceTree = "<group>"; };
+		1BC9C90F1E77C69300C07F21 /* TestJavaScripInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestJavaScripInterface.h; sourceTree = "<group>"; };
+		1BC9C9101E77C69300C07F21 /* TestJavaScripInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestJavaScripInterface.m; sourceTree = "<group>"; };
 		77C7C559B788BB6883B6F159 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		921DD7FB2BD4F993A8293FE1 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -145,6 +148,8 @@
 				1B76ECAA1C6366A600266ECE /* Images.xcassets */,
 				1B76ECAB1C6366A600266ECE /* JavascripInterface.h */,
 				1B76ECAC1C6366A600266ECE /* JavascripInterface.m */,
+				1BC9C90F1E77C69300C07F21 /* TestJavaScripInterface.h */,
+				1BC9C9101E77C69300C07F21 /* TestJavaScripInterface.m */,
 				1B76ECAE1C6366A600266ECE /* Main.storyboard */,
 				1B76ECAF1C6366A600266ECE /* Test.html */,
 				1B76ECB21C6366A600266ECE /* WKViewController.h */,
@@ -411,6 +416,7 @@
 				1BC9C9021E7291D900C07F21 /* FMWKWebViewBridge.m in Sources */,
 				1BC9C9051E72966200C07F21 /* FMJSBridgeMessageHandler.m in Sources */,
 				1B76ECB51C6366A600266ECE /* FMAppDelegate.m in Sources */,
+				1BC9C9111E77C69300C07F21 /* TestJavaScripInterface.m in Sources */,
 				1B76EC721C6364F400266ECE /* main.m in Sources */,
 				1B8285861D575533003038A0 /* README.md in Sources */,
 				1B76ECB81C6366A600266ECE /* JavascripInterface.m in Sources */,

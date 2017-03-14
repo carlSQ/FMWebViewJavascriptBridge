@@ -11,6 +11,7 @@
 #import "WKViewController.h"
 #import "FMWKWebViewBridge.h"
 #import "JavascripInterface.h"
+#import "TestJavaScripInterface.h"
 
 @interface WKViewController ()
 
@@ -28,7 +29,8 @@
   [self.view addSubview:self.webView];
   _webViewBridge = [FMWKWebViewBridge wkwebViewBridge:self.webView];
   JavascripInterface *interface = [[JavascripInterface alloc]initWithController:self];
-  [_webViewBridge addJavascriptInterface:interface withName:@"JavascripInterface"];
+  [_webViewBridge addJavascriptInterface:[JavascripInterface new] withName:@"JavascripInterface"];
+  [_webViewBridge addJavascriptInterface:[TestJavaScripInterface new] withName:@"TestInterface"];
   [self loadExamplePage];
   
 }
