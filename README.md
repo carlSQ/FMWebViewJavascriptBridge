@@ -17,7 +17,7 @@ FMWebViewJavascriptBridge inspired by [react native](https://github.com/facebook
 * 支持的参数可以是 nil NSNull NSString NSNumber NSDictionary NSArray NSDate char int double BOOL
 * 同时支持返回值给Javascrip的回调， 回调的类型FMCallBack，支持参数同上
 
- ``` objective-c
+``` objective-c
 
 @implementation JavascripInterface
 
