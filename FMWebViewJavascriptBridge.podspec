@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '8.0'
   s.requires_arc = true
   s.source_files  = 'Classes/*.{h,m}'
-  s.resource     = 'Classes/FMWebViewJavascriptBridge.js.txt'
+  s.resource     = 'Classes/FMWebViewJavascriptBridge.js'
   s.public_header_files ='Classes/*.h'
   s.frameworks = 'UIKit', 'WebKit'
 end
