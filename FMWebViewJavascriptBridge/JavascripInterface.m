@@ -7,49 +7,55 @@
 //
 
 #import "JavascripInterface.h"
-#import "ViewController.h"
+#import "NSObject+FMAnnotation.h"
+
+
 @interface JavascripInterface ()
-@property(nonatomic, weak) ViewController *viewController;
+@property(nonatomic, weak) WKViewController *viewController;
 @end
 
 @implementation JavascripInterface
 
-- (instancetype)initWithController:(ViewController *)viewController {
+- (instancetype)initWithController:(WKViewController *)viewController {
   if (self = [super init]) {
     self.viewController = viewController;
   }
   return self;
 }
-FM_REMAP_METHOD(push, void, push : (NSUInteger)one) {
+
+FM_EXPORT_METHOD(@selector(push:))
+- (void)push:(NSUInteger)one {
   [self.viewController.navigationController
-      pushViewController:[ViewController new]
+      pushViewController:[WKViewController new]
                 animated:YES];
   NSLog(@"test push%ld", (unsigned long)one);
 }
 
-FM_REMAP_METHOD(pop, void, pop : (NSString *)testArray) {
+FM_EXPORT_METHOD(@selector(pop:))
+- (void)pop:(NSString *)testArray {
   [self.viewController.navigationController popViewControllerAnimated:YES];
   NSLog(@"pop array %@", testArray);
 }
 
-FM_REMAP_METHOD(present, void, present) {
-  [self.viewController presentViewController:[ViewController new]
+FM_EXPORT_METHOD(@selector(present))
+- (void)present {
+  [self.viewController presentViewController:[WKViewController new]
                                     animated:YES
                                   completion:NULL];
 }
 
-FM_REMAP_METHOD(dismiss, void, dismiss) {
+FM_EXPORT_METHOD(@selector(dismiss))
+- (void)dismiss {
   [self.viewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
-FM_REMAP_METHOD(setNavTitle, void, setNavTitle
-                : (User *)user response
-                : (FMAsyResponse)response) {
-  self.viewController.title = user.name;
-  response(user);
+FM_EXPORT_METHOD(@selector(setNavTitle:response:))
+- (void)setNavTitle:(NSDictionary *)userInfo response:(FMCallBack)callBack {
+  self.viewController.title = userInfo[@"name"];
 }
 
-FM_REMAP_METHOD(setBack, void, setBack) {
+FM_EXPORT_METHOD(@selector(setBack))
+- (void)setBack {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setTitle:@"back" forState:UIControlStateNormal];
   [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -59,51 +65,6 @@ FM_REMAP_METHOD(setBack, void, setBack) {
       forControlEvents:UIControlEventTouchUpInside];
   self.viewController.navigationItem.leftBarButtonItem =
       [[UIBarButtonItem alloc] initWithCustomView:button];
-}
-FM_REMAP_METHOD(testInterfaceReturnData, NSString *, testInterfaceReturnData
-                : (NSDictionary *)dictionary) {
-  NSLog(@"test interface return data %@", dictionary);
-  //  return @[ @"returnData", @"test interface return data" ];
-  User *user = [User new];
-  user.name = @"ELE";
-  user.age = @"8";
-  return @"8";
-}
-
-FM_REMAP_METHOD(testBOOL, BOOL, testBOOL : (BOOL)testBOOL) {
-  if (testBOOL) {
-    NSLog(@"TEST IS YES");
-  } else {
-    NSLog(@"TEST IS NO");
-  }
-  return YES;
-  
-}
-
-FM_REMAP_METHOD(testInt, int, testInt : (int)testInt) {
-  NSLog(@"%d", testInt);
-  return 168;
-}
-
-FM_REMAP_METHOD(testString, NSString *, testString : (NSString *)testString) {
-  NSLog(@"==%@", testString);
-  return @"168";
-}
-
-FM_REMAP_METHOD(testArray, NSArray *, testArray : (NSArray *)testArray) {
-  NSLog(@"==%@", testArray);
-  return @[ @"1", @"2" ];
-}
-
-FM_REMAP_METHOD(testDictionary, NSDictionary *, testDictionary
-                : (NSDictionary *)testDictionary) {
-  NSLog(@"== %@", testDictionary);
-  return @{ @"name" : @"carl" };
-}
-
-FM_REMAP_METHOD(testCustomObject, User *, testCustomObject : (User *)user) {
-  NSLog(@"name = %@,  age = %@", user.name, user.age);
-  return user;
 }
 
 - (void)back {
@@ -115,7 +76,7 @@ FM_REMAP_METHOD(testCustomObject, User *, testCustomObject : (User *)user) {
   }
 }
 
-- (void)loadExamplePage:(UIWebView *)webView {
+- (void)loadExamplePage:(WKWebView *)webView {
   NSString *htmlPath =
       [[NSBundle mainBundle] pathForResource:@"Test" ofType:@"html"];
   NSString *appHtml = [NSString stringWithContentsOfFile:htmlPath

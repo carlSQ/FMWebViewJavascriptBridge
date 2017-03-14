@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "FMJavascriptInterface.h"
-#import "User.h"
+#import "NSObject+FMAnnotation.h"
+#import "WKViewController.h"
+
 @interface JavascripInterface : NSObject
 
-- (instancetype)initWithController:(UIViewController *)viewController;
+- (instancetype)initWithController:(WKViewController *)viewController;
 
 - (void)push:(NSUInteger)one;
 
@@ -22,10 +23,8 @@
 
 - (void)dismiss;
 
-- (void)setNavTitle:(User *)user response:(FMAsyResponse)response;
+- (void)setNavTitle:(NSDictionary *)userInfo response:(FMCallBack)callBack;
 
 - (void)setBack;
-
-- (NSString *)testInterfaceReturnData:(NSDictionary *)dictionary;
 
 @end

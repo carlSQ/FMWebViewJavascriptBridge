@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1B76EC721C6364F400266ECE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76EC711C6364F400266ECE /* main.m */; };
-		1B76EC781C6364F400266ECE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76EC771C6364F400266ECE /* ViewController.m */; };
 		1B76EC8B1C6364F400266ECE /* FMWebViewJavascriptBridgeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76EC8A1C6364F400266ECE /* FMWebViewJavascriptBridgeTests.m */; };
 		1B76EC961C6364F400266ECE /* FMWebViewJavascriptBridgeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76EC951C6364F400266ECE /* FMWebViewJavascriptBridgeUITests.m */; };
 		1B76ECB41C6366A600266ECE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1B76ECA41C6366A600266ECE /* InfoPlist.strings */; };
@@ -18,16 +17,14 @@
 		1B76ECB81C6366A600266ECE /* JavascripInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76ECAC1C6366A600266ECE /* JavascripInterface.m */; };
 		1B76ECBA1C6366A600266ECE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B76ECAE1C6366A600266ECE /* Main.storyboard */; };
 		1B76ECBB1C6366A600266ECE /* Test.html in Resources */ = {isa = PBXBuildFile; fileRef = 1B76ECAF1C6366A600266ECE /* Test.html */; };
-		1B76ECBC1C6366A600266ECE /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76ECB11C6366A600266ECE /* User.m */; };
 		1B76ECBD1C6366A600266ECE /* WKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76ECB31C6366A600266ECE /* WKViewController.m */; };
-		1B76ECCD1C6366C000266ECE /* FMJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76ECC21C6366C000266ECE /* FMJavascriptBridge.m */; };
-		1B76ECCE1C6366C000266ECE /* FMWebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1B76ECC51C6366C000266ECE /* FMWebViewJavascriptBridge.js.txt */; };
-		1B76ECCF1C6366C000266ECE /* FMWebViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76ECC71C6366C000266ECE /* FMWebViewManager.m */; };
-		1B76ECD01C6366C000266ECE /* FMWKWebViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76ECC91C6366C000266ECE /* FMWKWebViewManager.m */; };
-		1B76ECD11C6366C000266ECE /* NSObject+FMJavascriptInterfaceCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B76ECCB1C6366C000266ECE /* NSObject+FMJavascriptInterfaceCache.m */; };
+		1B76ECCE1C6366C000266ECE /* FMWebViewJavascriptBridge.js in Resources */ = {isa = PBXBuildFile; fileRef = 1B76ECC51C6366C000266ECE /* FMWebViewJavascriptBridge.js */; };
 		1B76ECD31C63673A00266ECE /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B76ECD21C63673A00266ECE /* Launch Screen.storyboard */; };
 		1B8285851D575533003038A0 /* FMWebViewJavascriptBridge.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 1B8285831D575533003038A0 /* FMWebViewJavascriptBridge.podspec */; };
 		1B8285861D575533003038A0 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 1B8285841D575533003038A0 /* README.md */; };
+		1BC9C9021E7291D900C07F21 /* FMWKWebViewBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC9C9011E7291D900C07F21 /* FMWKWebViewBridge.m */; };
+		1BC9C9051E72966200C07F21 /* FMJSBridgeMessageHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC9C9041E72966200C07F21 /* FMJSBridgeMessageHandler.m */; };
+		1BC9C9091E72D85900C07F21 /* NSObject+FMAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC9C9081E72D85900C07F21 /* NSObject+FMAnnotation.m */; };
 		F6E5E30ECB118D875BE290B5 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A2EA42E6C2BD4C4AD262823 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,8 +49,6 @@
 		1A2EA42E6C2BD4C4AD262823 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B76EC6D1C6364F400266ECE /* FMWebViewJavascriptBridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FMWebViewJavascriptBridge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B76EC711C6364F400266ECE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1B76EC761C6364F400266ECE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		1B76EC771C6364F400266ECE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		1B76EC861C6364F400266ECE /* FMWebViewJavascriptBridgeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FMWebViewJavascriptBridgeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B76EC8A1C6364F400266ECE /* FMWebViewJavascriptBridgeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMWebViewJavascriptBridgeTests.m; sourceTree = "<group>"; };
 		1B76EC8C1C6364F400266ECE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -70,25 +65,19 @@
 		1B76ECAC1C6366A600266ECE /* JavascripInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JavascripInterface.m; sourceTree = "<group>"; };
 		1B76ECAE1C6366A600266ECE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		1B76ECAF1C6366A600266ECE /* Test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Test.html; sourceTree = "<group>"; };
-		1B76ECB01C6366A600266ECE /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		1B76ECB11C6366A600266ECE /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		1B76ECB21C6366A600266ECE /* WKViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKViewController.h; sourceTree = "<group>"; };
 		1B76ECB31C6366A600266ECE /* WKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKViewController.m; sourceTree = "<group>"; };
-		1B76ECC01C6366C000266ECE /* FMJavascriptBridge+private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FMJavascriptBridge+private.h"; sourceTree = "<group>"; };
-		1B76ECC11C6366C000266ECE /* FMJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMJavascriptBridge.h; sourceTree = "<group>"; };
-		1B76ECC21C6366C000266ECE /* FMJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMJavascriptBridge.m; sourceTree = "<group>"; };
-		1B76ECC31C6366C000266ECE /* FMJavascriptInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMJavascriptInterface.h; sourceTree = "<group>"; };
-		1B76ECC41C6366C000266ECE /* FMJSONModelDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMJSONModelDelegate.h; sourceTree = "<group>"; };
-		1B76ECC51C6366C000266ECE /* FMWebViewJavascriptBridge.js.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FMWebViewJavascriptBridge.js.txt; sourceTree = "<group>"; };
-		1B76ECC61C6366C000266ECE /* FMWebViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMWebViewManager.h; sourceTree = "<group>"; };
-		1B76ECC71C6366C000266ECE /* FMWebViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMWebViewManager.m; sourceTree = "<group>"; };
-		1B76ECC81C6366C000266ECE /* FMWKWebViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMWKWebViewManager.h; sourceTree = "<group>"; };
-		1B76ECC91C6366C000266ECE /* FMWKWebViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMWKWebViewManager.m; sourceTree = "<group>"; };
-		1B76ECCA1C6366C000266ECE /* NSObject+FMJavascriptInterfaceCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+FMJavascriptInterfaceCache.h"; sourceTree = "<group>"; };
-		1B76ECCB1C6366C000266ECE /* NSObject+FMJavascriptInterfaceCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+FMJavascriptInterfaceCache.m"; sourceTree = "<group>"; };
+		1B76ECC51C6366C000266ECE /* FMWebViewJavascriptBridge.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = FMWebViewJavascriptBridge.js; sourceTree = "<group>"; };
 		1B76ECD21C63673A00266ECE /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		1B8285831D575533003038A0 /* FMWebViewJavascriptBridge.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FMWebViewJavascriptBridge.podspec; sourceTree = "<group>"; };
 		1B8285841D575533003038A0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		1BC9C9001E7291D900C07F21 /* FMWKWebViewBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMWKWebViewBridge.h; sourceTree = "<group>"; };
+		1BC9C9011E7291D900C07F21 /* FMWKWebViewBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMWKWebViewBridge.m; sourceTree = "<group>"; };
+		1BC9C9031E72966200C07F21 /* FMJSBridgeMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMJSBridgeMessageHandler.h; sourceTree = "<group>"; };
+		1BC9C9041E72966200C07F21 /* FMJSBridgeMessageHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMJSBridgeMessageHandler.m; sourceTree = "<group>"; };
+		1BC9C9071E72D85900C07F21 /* NSObject+FMAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+FMAnnotation.h"; sourceTree = "<group>"; };
+		1BC9C9081E72D85900C07F21 /* NSObject+FMAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+FMAnnotation.m"; sourceTree = "<group>"; };
+		1BC9C90C1E768CC700C07F21 /* FMWKWebViewBridge+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FMWKWebViewBridge+Private.h"; sourceTree = "<group>"; };
 		77C7C559B788BB6883B6F159 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		921DD7FB2BD4F993A8293FE1 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -158,12 +147,8 @@
 				1B76ECAC1C6366A600266ECE /* JavascripInterface.m */,
 				1B76ECAE1C6366A600266ECE /* Main.storyboard */,
 				1B76ECAF1C6366A600266ECE /* Test.html */,
-				1B76ECB01C6366A600266ECE /* User.h */,
-				1B76ECB11C6366A600266ECE /* User.m */,
 				1B76ECB21C6366A600266ECE /* WKViewController.h */,
 				1B76ECB31C6366A600266ECE /* WKViewController.m */,
-				1B76EC761C6364F400266ECE /* ViewController.h */,
-				1B76EC771C6364F400266ECE /* ViewController.m */,
 				1B76EC701C6364F400266ECE /* Supporting Files */,
 			);
 			path = FMWebViewJavascriptBridge;
@@ -206,18 +191,14 @@
 		1B76ECBE1C6366C000266ECE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				1B76ECC01C6366C000266ECE /* FMJavascriptBridge+private.h */,
-				1B76ECC11C6366C000266ECE /* FMJavascriptBridge.h */,
-				1B76ECC21C6366C000266ECE /* FMJavascriptBridge.m */,
-				1B76ECC31C6366C000266ECE /* FMJavascriptInterface.h */,
-				1B76ECC41C6366C000266ECE /* FMJSONModelDelegate.h */,
-				1B76ECC51C6366C000266ECE /* FMWebViewJavascriptBridge.js.txt */,
-				1B76ECC61C6366C000266ECE /* FMWebViewManager.h */,
-				1B76ECC71C6366C000266ECE /* FMWebViewManager.m */,
-				1B76ECC81C6366C000266ECE /* FMWKWebViewManager.h */,
-				1B76ECC91C6366C000266ECE /* FMWKWebViewManager.m */,
-				1B76ECCA1C6366C000266ECE /* NSObject+FMJavascriptInterfaceCache.h */,
-				1B76ECCB1C6366C000266ECE /* NSObject+FMJavascriptInterfaceCache.m */,
+				1B76ECC51C6366C000266ECE /* FMWebViewJavascriptBridge.js */,
+				1BC9C9071E72D85900C07F21 /* NSObject+FMAnnotation.h */,
+				1BC9C9081E72D85900C07F21 /* NSObject+FMAnnotation.m */,
+				1BC9C9001E7291D900C07F21 /* FMWKWebViewBridge.h */,
+				1BC9C9011E7291D900C07F21 /* FMWKWebViewBridge.m */,
+				1BC9C90C1E768CC700C07F21 /* FMWKWebViewBridge+Private.h */,
+				1BC9C9031E72966200C07F21 /* FMJSBridgeMessageHandler.h */,
+				1BC9C9041E72966200C07F21 /* FMJSBridgeMessageHandler.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -345,7 +326,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B76ECCE1C6366C000266ECE /* FMWebViewJavascriptBridge.js.txt in Resources */,
+				1B76ECCE1C6366C000266ECE /* FMWebViewJavascriptBridge.js in Resources */,
 				1B76ECBA1C6366A600266ECE /* Main.storyboard in Resources */,
 				1B76ECD31C63673A00266ECE /* Launch Screen.storyboard in Resources */,
 				1B76ECB71C6366A600266ECE /* Images.xcassets in Resources */,
@@ -425,14 +406,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B76ECCD1C6366C000266ECE /* FMJavascriptBridge.m in Sources */,
 				1B76ECBD1C6366A600266ECE /* WKViewController.m in Sources */,
-				1B76ECBC1C6366A600266ECE /* User.m in Sources */,
-				1B76ECD01C6366C000266ECE /* FMWKWebViewManager.m in Sources */,
-				1B76ECD11C6366C000266ECE /* NSObject+FMJavascriptInterfaceCache.m in Sources */,
+				1BC9C9091E72D85900C07F21 /* NSObject+FMAnnotation.m in Sources */,
+				1BC9C9021E7291D900C07F21 /* FMWKWebViewBridge.m in Sources */,
+				1BC9C9051E72966200C07F21 /* FMJSBridgeMessageHandler.m in Sources */,
 				1B76ECB51C6366A600266ECE /* FMAppDelegate.m in Sources */,
-				1B76ECCF1C6366C000266ECE /* FMWebViewManager.m in Sources */,
-				1B76EC781C6364F400266ECE /* ViewController.m in Sources */,
 				1B76EC721C6364F400266ECE /* main.m in Sources */,
 				1B8285861D575533003038A0 /* README.md in Sources */,
 				1B76ECB81C6366A600266ECE /* JavascripInterface.m in Sources */,
