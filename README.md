@@ -1,6 +1,9 @@
 #FMWebViewJavascriptBridge
 
+[![CI Status](http://img.shields.io/travis/carlSQ/FMWebViewJavascriptBridge.svg?style=flat)](https://travis-ci.org/carlSQ/FMWebViewJavascriptBridge)
 [![Version](https://img.shields.io/cocoapods/v/FMWebViewJavascriptBridge.svg?style=flat)](http://cocoapods.org/pods/FMWebViewJavascriptBridge)
+[![License](https://img.shields.io/cocoapods/l/FMWebViewJavascriptBridge.svg?style=flat)](http://cocoapods.org/pods/FMWebViewJavascriptBridge)
+[![Platform](https://img.shields.io/cocoapods/p/FMWebViewJavascriptBridge.svg?style=flat)](http://cocoapods.org/pods/FMWebViewJavascriptBridge)
 
 # 简介
 
