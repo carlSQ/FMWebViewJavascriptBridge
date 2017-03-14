@@ -10,10 +10,10 @@ Pod::Spec.new do |s|
 
   s.homepage         = "https://github.com/carlSQ/FMWebViewJavascript"
   s.license          = 'MIT'
-  s.author           = { "carl shen" => "yuzhoulangzik@126.com" }
+  s.author           = { "carl shen" => "qiang.shen@ele.me" }
   s.source           = { :git => "https://github.com/carlSQ/FMWebViewJavascript.git", :tag => s.version.to_s }
 
-  s.platform     = :ios, '7.0'
+  s.platform     = :ios, '8.0'
   s.requires_arc = true
   s.source_files  = 'Classes/*.{h,m}'
   s.resource     = 'Classes/FMWebViewJavascriptBridge.js.txt'
