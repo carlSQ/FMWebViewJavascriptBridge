@@ -77,7 +77,7 @@ javascripInterface.setNavTitle({"name" : "carl", age:"18"},function(responseData
 #Usage
 
 ```ruby
-pod "FMWebViewJavascriptBridge"
+pod 'FMWebViewJavascriptBridge', '~> 3.0.0'
 ```
 
 ## Author
