@@ -13,16 +13,16 @@ FMWebViewJavascriptBridge inspired by [react native](https://github.com/facebook
 
 ## how to Use
 
-### 自定义 JavascripInterface
+### 自定义 JavascriptInterface
 
-* 自定义 JavascripInterface 类
+* 自定义 JavascriptInterface 类
 * 在暴露的接口前添加FM_EXPORT_METHOD宏
 * 支持的参数可以是 nil NSNull NSString NSNumber NSDictionary NSArray NSDate char int double BOOL
 * 同时支持返回值给Javascrip的回调， 回调的类型FMCallBack，支持参数同上
 
 ``` objective-c
 
-@implementation JavascripInterface
+@implementation JavascriptInterface
 
 FM_EXPORT_METHOD(@selector(push:))
 - (void)push:(NSUInteger)one {
@@ -46,17 +46,17 @@ FM_EXPORT_METHOD(@selector(setNavTitle:response:))
 
 ```
 
-### 添加接口给javascrip调用
+### 添加接口给javascript调用
 
 用 FMWKWebViewBridge 类中的接口addJavascriptInterface 添加接口道javascrip层
 
 ``` objective-c
 _webViewBridge = [FMWKWebViewBridge wkwebViewBridge:self.webView];
-[_webViewBridge addJavascriptInterface:[JavascripInterface new] withName:@"JavascripInterface"];
+[_webViewBridge addJavascriptInterface:[JavascriptInterface new] withName:@"JavascripInterface"];
 
 ```
 
-### 调用在js层
+### js层调用
 
 FM_Require 中的名字是 addJavascriptInterface 中设置的名字
 
@@ -64,9 +64,9 @@ FM_Require 中的名字是 addJavascriptInterface 中设置的名字
 
 <script>
 
-javascripInterface = FM_Require('JavascripInterface')
+var javascriptInterface = FM_Require('JavascriptInterface')
 
-javascripInterface.setNavTitle({"name" : "carl", age:"18"},function(responseData) {
+javascriptInterface.setNavTitle({"name" : "carl", age:"18"},function(responseData) {
                                      setNavTitle.innerHTML = "name:"+responseData.name +"  age:" + responseData.age;
                                      })
 
