@@ -3,13 +3,12 @@
             window.WebViewJavascriptBridge.fmInject(modules);
         } else { (function(modules) {
             var responseCallbacks = {};
-            var fmModules = {};
             var uniqueId = 1;
 
             function fmInject(modules) {
                 Object.keys(modules).forEach(function(moduleName, index, moduleNames) { (function(moduleName, methods) {
-                    fmModules[moduleName] = {};
-                    var jsObj = fmModules[moduleName];
+                    window[moduleName] = {};
+                    var jsObj = window[moduleName];
                     methods.forEach(function(methodName) {
                         jsObj[methodName] = function () {
                             var finalArgs = Array.prototype.slice.call(arguments).map(function(argument){
@@ -74,10 +73,6 @@
             function handleMessageFromNative(messageJSON) {
                 _dispatchMessageFromNative(messageJSON);
             }
-
-            window.FM_Require = function(moduleName) {
-                return fmModules[moduleName];
-            };
 
             window.WebViewJavascriptBridge = {
                 fmInject: fmInject,
