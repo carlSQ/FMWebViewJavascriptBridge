@@ -7,7 +7,7 @@
 
 # 简介
 
-FMWebViewJavascriptBridge inspired by [react native](https://github.com/facebook/react-native) 是一个轻量级的JavascriptBridge，只支持WKWebView iOS 8.0之后。
+FMWebViewJavascriptBridge inspired by [react native](https://github.com/facebook/react-native) 是一个轻量级的JavascriptBridge，只支持WKWebView iOS 8.0之后，与android原生调用保持一致。
 ![image](http://7xs4ye.com1.z0.glb.clouddn.com/jsbridge.png)
 
 
@@ -58,15 +58,13 @@ _webViewBridge = [FMWKWebViewBridge wkwebViewBridge:self.webView];
 
 ### js层调用
 
-FM_Require 中的名字是 addJavascriptInterface 中设置的名字
+与android原生调用保持一致，addJavascriptInterface 会在js层注入一个对象，名字是addJavascriptInterface 中设置的名字
 
 ``` javascrip
 
 <script>
 
-var javascriptInterface = FM_Require('JavascriptInterface')
-
-javascriptInterface.setNavTitle({"name" : "carl", age:"18"},function(responseData) {
+JavascriptInterface.setNavTitle({"name" : "carl", age:"18"},function(responseData) {
                                      setNavTitle.innerHTML = "name:"+responseData.name +"  age:" + responseData.age;
                                      })
 
